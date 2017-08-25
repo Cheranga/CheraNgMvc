@@ -3,3 +3,6 @@
 ################################################################################
 
 /CheraNgMvc/bin
+/CheraNgMvc/node_modules
+/CheraNgMvc/obj/Debug
+/packages
