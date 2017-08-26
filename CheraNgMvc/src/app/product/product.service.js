@@ -30,6 +30,11 @@ var ProductService = (function () {
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.url + '/Search', searchData, options).map(this.extractData).catch(this.handleErrors);
     };
+    ProductService.prototype.addProduct = function (product) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(this.url, product, options).map(this.extractData).catch(this.handleErrors);
+    };
     ProductService.prototype.extractData = function (res) {
         var body = res.json();
         return body || {};

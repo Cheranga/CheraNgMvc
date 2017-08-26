@@ -11,6 +11,28 @@ namespace CheraNgMvc.Controllers
     [RoutePrefix("api/CategoryApi")]
     public class CategoryApiController : ApiController
     {
+        public IHttpActionResult Get()
+        {
+            IHttpActionResult ret;
+            PTCViewModel vm = new PTCViewModel();
+
+            vm.LoadCategories();
+            if (vm.Categories.Count() > 0)
+            {
+                ret = Ok(vm.Categories);
+            }
+            else if (vm.LastException != null)
+            {
+                ret = BadRequest(vm.Message);
+            }
+            else
+            {
+                ret = NotFound();
+            }
+
+            return ret;
+        }
+
         [HttpPost()]
         [Route("SearchCategories")]
         public IHttpActionResult GetSearchCategories()

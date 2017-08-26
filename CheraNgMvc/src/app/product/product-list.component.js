@@ -10,14 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var product_service_1 = require("./product.service");
 var category_service_1 = require("../category/category.service");
 var productSearch_1 = require("./productSearch");
 var ProductListComponent = (function () {
     // Constructor
-    function ProductListComponent(productService, categoryService) {
+    function ProductListComponent(productService, categoryService, router) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.router = router;
         // Properties
         this.products = [];
         this.messages = [];
@@ -48,6 +50,9 @@ var ProductListComponent = (function () {
         this.searchEntity.productName = '';
         this.getProducts();
     };
+    ProductListComponent.prototype.add = function () {
+        this.router.navigate(['/productDetail', -1]);
+    };
     ProductListComponent.prototype.handleErrors = function (errors) {
         this.messages = [];
         for (var _i = 0, errors_1 = errors; _i < errors_1.length; _i++) {
@@ -60,7 +65,8 @@ var ProductListComponent = (function () {
             templateUrl: "./product-list.component.html"
         }),
         __metadata("design:paramtypes", [product_service_1.ProductService,
-            category_service_1.CategoryService])
+            category_service_1.CategoryService,
+            router_1.Router])
     ], ProductListComponent);
     return ProductListComponent;
 }());

@@ -3,16 +3,21 @@ import { RouterModule, Routes } from "@angular/router";
 
 // Application components
 import { ProductListComponent } from "./product/product-list.component";
+import { ProductDetailComponent } from "./product/product-detail.component";
 
 // Define the routes for the application
 const routes: Routes = [
     {
         path: 'productList',
-        component: ProductListComponent       
+        component: ProductListComponent
     },
     {
         path: 'Product/Product',
-        redirectTo:'productList'
+        redirectTo: 'productList'
+    },
+    {
+        path: 'productDetail/:id',
+        component: ProductDetailComponent
     }
 ];
 

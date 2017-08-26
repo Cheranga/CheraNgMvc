@@ -1,11 +1,13 @@
 ﻿using CheraNgMvc.ViewModels;
 using PTC;
+using PTC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 namespace CheraNgMvc.Controllers
 {
@@ -50,6 +52,62 @@ namespace CheraNgMvc.Controllers
             else
             {
                 ret = Ok(vm.Products);
+            }
+
+            return ret;
+        }
+
+
+        [HttpPost]
+        public IHttpActionResult Post(Product product)
+        {
+            IHttpActionResult ret = null;
+            PTCViewModel vm = new PTCViewModel();
+
+            if (product != null)
+            {
+                vm.Entity = product;
+                vm.PageMode = PDSAPageModeEnum.Add;
+                vm.Save();
+                if (vm.IsValid)
+                {
+                    ret = Created<Product>(
+                          Request.RequestUri +
+                          vm.Entity.ProductId.ToString(),
+                            vm.Entity);
+                }
+                else
+                {
+                    if (vm.Messages.Count > 0)
+                    {
+                        ret = BadRequest(
+                          ConvertToModelState(vm.Messages));
+                    }
+                    else
+                    {
+                        ret = BadRequest(vm.Message);
+                    }
+                }
+            }
+            else
+            {
+                ret = NotFound();
+            }
+
+            return ret;
+        }
+
+
+        private ModelStateDictionary ConvertToModelState(System.Web.Mvc.ModelStateDictionary state)
+        {
+            ModelStateDictionary ret = new ModelStateDictionary();
+
+            foreach (var list in state.ToList())
+            {
+                for (int i = 0; i < list.Value.Errors.Count; i++)
+                {
+                    ret.AddModelError(list.Key, list.Value.Errors[i].ErrorMessage);
+                }
             }
 
             return ret;

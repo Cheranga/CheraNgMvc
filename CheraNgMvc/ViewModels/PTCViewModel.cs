@@ -214,7 +214,7 @@ namespace CheraNgMvc.ViewModels
                     (SearchEntity.CategoryId == 0 ? true :
                          p.Category.CategoryId == SearchEntity.CategoryId) &&
                     (string.IsNullOrEmpty(SearchEntity.ProductName) ? true :
-                         p.ProductName.StartsWith(SearchEntity.ProductName))).
+                         p.ProductName.Contains(SearchEntity.ProductName))).
                     OrderBy(p => p.ProductName).ToList();
 
                 SetUIState(PDSAPageModeEnum.List);
