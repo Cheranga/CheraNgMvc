@@ -13,8 +13,8 @@ var AppComponent = (function () {
     }
     AppComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            template: "<h1>Hello {{name}}</h1>",
+            selector: 'cc-app',
+            templateUrl: './app-component.html'
         })
     ], AppComponent);
     return AppComponent;
