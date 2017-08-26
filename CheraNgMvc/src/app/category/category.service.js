@@ -10,41 +10,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+// We need 'Headers' and 'RequestOptions' modules because we are going to POST data to the server
 var http_1 = require("@angular/http");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
 require("rxjs/add/observable/throw");
-var ProductService = (function () {
-    function ProductService(http) {
+var CategoryService = (function () {
+    function CategoryService(http) {
         this.http = http;
-        this.url = '/api/productapi';
+        this.url = "/api/CategoryApi";
     }
-    ProductService.prototype.getProducts = function () {
-        return this.http.get(this.url)
-            .map(this.extractData)
-            .catch(this.handleErrors);
-    };
-    ProductService.prototype.search = function (searchData) {
+    CategoryService.prototype.getSearchCategories = function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post(this.url + '/Search', searchData, options).map(this.extractData).catch(this.handleErrors);
+        return this.http.post(this.url + '/SearchCategories', null, options).map(this.extractData).catch(this.handleErrors);
     };
-    ProductService.prototype.extractData = function (res) {
+    CategoryService.prototype.extractData = function (res) {
         var body = res.json();
         return body || {};
     };
-    ProductService.prototype.handleErrors = function (error) {
+    CategoryService.prototype.handleErrors = function (error) {
         var errors = [];
         console.error('An error occured', errors);
         errors.push('An error occured');
         return Observable_1.Observable.throw(errors);
     };
-    ProductService = __decorate([
+    CategoryService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_1.Http])
-    ], ProductService);
-    return ProductService;
+    ], CategoryService);
+    return CategoryService;
 }());
-exports.ProductService = ProductService;
-//# sourceMappingURL=product.service.js.map
+exports.CategoryService = CategoryService;
+//# sourceMappingURL=category.service.js.map
