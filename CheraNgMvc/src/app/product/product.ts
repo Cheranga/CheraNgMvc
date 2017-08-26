@@ -4,5 +4,5 @@
     introductionDate: Date;
     price: number;
     url: string;
-    categoryId: string
+    categoryId: number;
 };

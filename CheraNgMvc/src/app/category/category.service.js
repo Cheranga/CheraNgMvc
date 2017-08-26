@@ -26,6 +26,9 @@ var CategoryService = (function () {
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.url + '/SearchCategories', null, options).map(this.extractData).catch(this.handleErrors);
     };
+    CategoryService.prototype.getCategories = function () {
+        return this.http.get(this.url).map(this.extractData).catch(this.handleErrors);
+    };
     CategoryService.prototype.extractData = function (res) {
         var body = res.json();
         return body || {};

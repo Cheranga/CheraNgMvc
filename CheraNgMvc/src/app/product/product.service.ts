@@ -28,6 +28,14 @@ export class ProductService {
         return this.http.post(this.url + '/Search', searchData, options).map(this.extractData).catch(this.handleErrors);
     }
 
+    addProduct(product: Product): Observable<Product> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.url, product, options).map(this.extractData).catch(this.handleErrors);
+    }
+
+
     private extractData(res: Response) {
         let body = res.json();
         return body || {};

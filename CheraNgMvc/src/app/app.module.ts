@@ -9,6 +9,7 @@ import { AppRoutingModule } from "./app-routing.module";
 // Application components
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './product/product-list.component';
+import { ProductDetailComponent } from './product/product-detail.component';
 
 // Application services
 import { ProductService } from './product/product.service';
@@ -17,7 +18,7 @@ import { CategoryService } from './category/category.service';
 
 @NgModule({
     imports: [BrowserModule, AppRoutingModule, HttpModule, FormsModule],
-    declarations: [AppComponent, ProductListComponent],
+    declarations: [AppComponent, ProductListComponent, ProductDetailComponent],
     bootstrap: [AppComponent],
     providers: [ProductService, CategoryService]
 })

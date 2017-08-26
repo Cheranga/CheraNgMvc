@@ -23,6 +23,10 @@ export class CategoryService {
         return this.http.post(this.url + '/SearchCategories', null, options).map(this.extractData).catch(this.handleErrors);
     }
 
+    getCategories(): Observable<Category[]> {
+        return this.http.get(this.url).map(this.extractData).catch(this.handleErrors);
+    }
+
     private extractData(res: Response) {
         let body = res.json();
         return body || {};

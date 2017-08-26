@@ -10,6 +10,7 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 // Application components
 var product_list_component_1 = require("./product/product-list.component");
+var product_detail_component_1 = require("./product/product-detail.component");
 // Define the routes for the application
 var routes = [
     {
@@ -19,6 +20,10 @@ var routes = [
     {
         path: 'Product/Product',
         redirectTo: 'productList'
+    },
+    {
+        path: 'productDetail/:id',
+        component: product_detail_component_1.ProductDetailComponent
     }
 ];
 var AppRoutingModule = (function () {
