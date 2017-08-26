@@ -1,31 +1,26 @@
 ﻿import { Injectable } from '@angular/core';
+// We need 'Headers' and 'RequestOptions' modules because we are going to POST data to the server
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { Product } from "./product";
-import { ProductSearch } from './productSearch';
+import { Category } from './category';
 
 @Injectable()
-export class ProductService {
-    private url = '/api/productapi';
+export class CategoryService {
+    private url: string = "/api/CategoryApi";
 
     constructor(private http: Http) {
+
     }
 
-    getProducts(): Observable<Product[]> {
-        return this.http.get(this.url)
-            .map(this.extractData)
-            .catch(this.handleErrors);
-    }
-
-    search(searchData: ProductSearch): Observable<Product[]> {
+    getSearchCategories(): Observable<Category[]> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post(this.url + '/Search', searchData, options).map(this.extractData).catch(this.handleErrors);
+        return this.http.post(this.url + '/SearchCategories', null, options).map(this.extractData).catch(this.handleErrors);
     }
 
     private extractData(res: Response) {
@@ -42,4 +37,4 @@ export class ProductService {
 
         return Observable.throw(errors);
     }
-}
+} 

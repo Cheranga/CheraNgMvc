@@ -11,13 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var product_service_1 = require("./product.service");
+var category_service_1 = require("../category/category.service");
+var productSearch_1 = require("./productSearch");
 var ProductListComponent = (function () {
     // Constructor
-    function ProductListComponent(productService) {
+    function ProductListComponent(productService, categoryService) {
         this.productService = productService;
+        this.categoryService = categoryService;
         // Properties
         this.products = [];
         this.messages = [];
+        this.searchCategories = [];
+        this.searchEntity = new productSearch_1.ProductSearch();
     }
     // When initializing the control get the data
     ProductListComponent.prototype.ngOnInit = function () {
@@ -26,7 +31,22 @@ var ProductListComponent = (function () {
     // Methods
     ProductListComponent.prototype.getProducts = function () {
         var _this = this;
+        this.searchEntity.categoryId = 0;
         this.productService.getProducts().subscribe(function (products) { return _this.products = products; }, function (errors) { return _this.handleErrors(errors); });
+        this.getSearchCategories();
+    };
+    ProductListComponent.prototype.getSearchCategories = function () {
+        var _this = this;
+        this.categoryService.getSearchCategories().subscribe(function (categories) { return _this.searchCategories = categories; }, function (errors) { return _this.handleErrors(errors); });
+    };
+    ProductListComponent.prototype.search = function () {
+        var _this = this;
+        this.productService.search(this.searchEntity).subscribe(function (products) { return _this.products = products; }, function (errors) { return _this.handleErrors(errors); });
+    };
+    ProductListComponent.prototype.resetSearch = function () {
+        this.searchEntity.categoryId = 0;
+        this.searchEntity.productName = '';
+        this.getProducts();
     };
     ProductListComponent.prototype.handleErrors = function (errors) {
         this.messages = [];
@@ -39,7 +59,8 @@ var ProductListComponent = (function () {
         core_1.Component({
             templateUrl: "./product-list.component.html"
         }),
-        __metadata("design:paramtypes", [product_service_1.ProductService])
+        __metadata("design:paramtypes", [product_service_1.ProductService,
+            category_service_1.CategoryService])
     ], ProductListComponent);
     return ProductListComponent;
 }());
