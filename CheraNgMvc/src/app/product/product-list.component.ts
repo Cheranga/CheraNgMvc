@@ -61,6 +61,13 @@ export class ProductListComponent implements OnInit {
         this.router.navigate(['/productDetail', id]);
     }
 
+    deleteProduct(id: number) {
+        if (confirm("Are you sure to delete the product?")) {
+            this.productService.deleteProduct(id)
+                .subscribe(() => this.getProducts(), errors => this.handleErrors(errors));
+        }
+    }
+
     private handleErrors(errors: any) {
         this.messages = [];
 

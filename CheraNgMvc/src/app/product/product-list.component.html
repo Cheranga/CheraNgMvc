@@ -66,6 +66,7 @@
                         <th>Introduction Date</th>
                         <th>URL</th>
                         <th class="text-right">Price</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody> 
@@ -79,7 +80,13 @@
                         <td>{{product.productName}}</td>
                         <td>{{product.introductionDate | date }}</td>
                         <td>{{product.url}}</td>
-                        <td class="text-right">{{product.price | currency:'USD':true }}</td>                        
+                        <td class="text-right">{{product.price | currency:'USD':true }}</td>       
+                        <td>
+                            <button class="btn btn-default btn-sm"
+                                    (click)="deleteProduct(product.productId)">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </button>
+                        </td>                 
                     </tr>
                 </tbody>
             </table>

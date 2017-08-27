@@ -154,6 +154,24 @@ namespace CheraNgMvc.Controllers
             return ret;
         }
 
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+            IHttpActionResult ret;
+            PTCViewModel vm = new PTCViewModel();
+
+            vm.Delete(id);
+            if (vm.LastException != null)
+            {
+                ret = BadRequest(vm.Message);
+            }
+            else
+            {
+                ret = Ok(vm.Entity);
+            }
+
+            return ret;
+        }
 
         private ModelStateDictionary ConvertToModelState(System.Web.Mvc.ModelStateDictionary state)
         {
