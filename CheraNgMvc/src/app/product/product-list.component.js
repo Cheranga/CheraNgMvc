@@ -53,6 +53,16 @@ var ProductListComponent = (function () {
     ProductListComponent.prototype.add = function () {
         this.router.navigate(['/productDetail', -1]);
     };
+    ProductListComponent.prototype.selectProduct = function (id) {
+        this.router.navigate(['/productDetail', id]);
+    };
+    ProductListComponent.prototype.deleteProduct = function (id) {
+        var _this = this;
+        if (confirm("Are you sure to delete the product?")) {
+            this.productService.deleteProduct(id)
+                .subscribe(function () { return _this.getProducts(); }, function (errors) { return _this.handleErrors(errors); });
+        }
+    };
     ProductListComponent.prototype.handleErrors = function (errors) {
         this.messages = [];
         for (var _i = 0, errors_1 = errors; _i < errors_1.length; _i++) {

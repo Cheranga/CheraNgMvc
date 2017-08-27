@@ -21,6 +21,13 @@ export class ProductService {
             .catch(this.handleErrors);
     }
 
+    getProduct(id: Number): Observable<Product> {
+        let url = this.url + '/' + id;
+        return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleErrors);
+    }
+
     search(searchData: ProductSearch): Observable<Product[]> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
@@ -33,6 +40,19 @@ export class ProductService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.url, product, options).map(this.extractData).catch(this.handleErrors);
+    }
+
+    updateProduct(product: Product): Observable<Product> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.put(this.url, product, options).map(this.extractData).catch(this.handleErrors);
+    }
+
+    deleteProduct(id: number): Observable<Product> {
+        let url = this.url + '/' + id;
+
+        return this.http.delete(url).map(() => null).catch(this.handleErrors);
     }
 
 

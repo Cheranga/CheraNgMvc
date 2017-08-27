@@ -36,6 +36,29 @@ namespace CheraNgMvc.Controllers
             return ret;
         }
 
+        [HttpGet]
+        public IHttpActionResult Get(int id)
+        {
+            IHttpActionResult ret;
+            PTCViewModel vm = new PTCViewModel();
+
+            vm.Get(id);
+            if (vm.Entity != null)
+            {
+                ret = Ok(vm.Entity);
+            }
+            else if (vm.LastException != null)
+            {
+                ret = BadRequest(vm.Message);
+            }
+            else
+            {
+                ret = NotFound();
+            }
+
+            return ret;
+        }
+
         [HttpPost]
         [Route("Search")]
         public IHttpActionResult Search([FromBody]ProductSearch search)
@@ -56,8 +79,7 @@ namespace CheraNgMvc.Controllers
 
             return ret;
         }
-
-
+        
         [HttpPost]
         public IHttpActionResult Post(Product product)
         {
@@ -97,6 +119,59 @@ namespace CheraNgMvc.Controllers
             return ret;
         }
 
+        [HttpPut()]
+        public IHttpActionResult Put(int id, Product product)
+        {
+            IHttpActionResult ret = null;
+            PTCViewModel vm = new PTCViewModel();
+
+            if (product != null)
+            {
+                vm.Entity = product;
+                vm.PageMode = PDSAPageModeEnum.Edit;
+                vm.Save();
+                if (vm.IsValid)
+                {
+                    ret = Ok(vm.Entity);
+                }
+                else
+                {
+                    if (vm.Messages.Count > 0)
+                    {
+                        ret = BadRequest(ConvertToModelState(vm.Messages));
+                    }
+                    else if (vm.LastException != null)
+                    {
+                        ret = BadRequest(vm.Message);
+                    }
+                }
+            }
+            else
+            {
+                ret = NotFound();
+            }
+
+            return ret;
+        }
+
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+            IHttpActionResult ret;
+            PTCViewModel vm = new PTCViewModel();
+
+            vm.Delete(id);
+            if (vm.LastException != null)
+            {
+                ret = BadRequest(vm.Message);
+            }
+            else
+            {
+                ret = Ok(vm.Entity);
+            }
+
+            return ret;
+        }
 
         private ModelStateDictionary ConvertToModelState(System.Web.Mvc.ModelStateDictionary state)
         {

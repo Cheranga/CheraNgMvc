@@ -25,6 +25,12 @@ var ProductService = (function () {
             .map(this.extractData)
             .catch(this.handleErrors);
     };
+    ProductService.prototype.getProduct = function (id) {
+        var url = this.url + '/' + id;
+        return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleErrors);
+    };
     ProductService.prototype.search = function (searchData) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
@@ -34,6 +40,15 @@ var ProductService = (function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post(this.url, product, options).map(this.extractData).catch(this.handleErrors);
+    };
+    ProductService.prototype.updateProduct = function (product) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.put(this.url, product, options).map(this.extractData).catch(this.handleErrors);
+    };
+    ProductService.prototype.deleteProduct = function (id) {
+        var url = this.url + '/' + id;
+        return this.http.delete(url).map(function () { return null; }).catch(this.handleErrors);
     };
     ProductService.prototype.extractData = function (res) {
         var body = res.json();
