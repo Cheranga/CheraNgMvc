@@ -53,6 +53,9 @@ var ProductListComponent = (function () {
     ProductListComponent.prototype.add = function () {
         this.router.navigate(['/productDetail', -1]);
     };
+    ProductListComponent.prototype.selectProduct = function (id) {
+        this.router.navigate(['/productDetail', id]);
+    };
     ProductListComponent.prototype.handleErrors = function (errors) {
         this.messages = [];
         for (var _i = 0, errors_1 = errors; _i < errors_1.length; _i++) {

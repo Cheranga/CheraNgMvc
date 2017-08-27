@@ -57,6 +57,10 @@ export class ProductListComponent implements OnInit {
         this.router.navigate(['/productDetail', -1]);
     }
 
+    selectProduct(id: number) {
+        this.router.navigate(['/productDetail', id]);
+    }
+
     private handleErrors(errors: any) {
         this.messages = [];
 

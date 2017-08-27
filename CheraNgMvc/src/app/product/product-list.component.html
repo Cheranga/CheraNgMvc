@@ -61,6 +61,7 @@
             <table class="table table-bordered table-condensed table-striped">
                 <thead>
                     <tr>
+                        <th>Edit</th>
                         <th>Product Name</th>
                         <th>Introduction Date</th>
                         <th>URL</th>
@@ -68,7 +69,13 @@
                     </tr>
                 </thead>
                 <tbody> 
-                    <tr *ngFor="let product of products">                        
+                    <tr *ngFor="let product of products">     
+                        <td>
+                            <button class="btn btn-default btn-sm"
+                                    (click)="selectProduct(product.productId)">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </button>
+                        </td>                   
                         <td>{{product.productName}}</td>
                         <td>{{product.introductionDate | date }}</td>
                         <td>{{product.url}}</td>

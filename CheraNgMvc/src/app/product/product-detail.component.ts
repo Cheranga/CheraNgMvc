@@ -26,13 +26,24 @@ export class ProductDetailComponent implements OnInit {
     categories: Category[] = [];
 
     ngOnInit() {
+        this.route.params.forEach((params: Params) => {
 
-        this.product = new Product();
-        this.product.price = 1;
-        this.product.categoryId = 1;
-        this.product.url = "www.cheranga.com";
+            console.log(params);
 
-        this.messages = [];
+            if (params['id'] !== undefined) {
+                if (params['id'] != "-1") {
+                    this.productService.getProduct(params['id'])
+                        .subscribe(product => this.product = product,
+                        errors => this.handleErrors(errors));
+                }
+                else {
+                    this.product = new Product();
+                    this.product.price = 1;
+                    this.product.categoryId = 1;
+                    this.product.url = "http://www.fairwaytech.com";
+                }
+            }
+        });
 
         this.getCategories();
     }
@@ -50,7 +61,7 @@ export class ProductDetailComponent implements OnInit {
     }
 
     private updateProduct(product: Product) {
-
+        this.productService.updateProduct(product).subscribe(() => this.goBack(), errors => this.handleErrors(errors));
     }
 
     private getCategories() {

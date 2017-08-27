@@ -24,11 +24,22 @@ var ProductDetailComponent = (function () {
         this.categories = [];
     }
     ProductDetailComponent.prototype.ngOnInit = function () {
-        this.product = new product_1.Product();
-        this.product.price = 1;
-        this.product.categoryId = 1;
-        this.product.url = "www.cheranga.com";
-        this.messages = [];
+        var _this = this;
+        this.route.params.forEach(function (params) {
+            console.log(params);
+            if (params['id'] !== undefined) {
+                if (params['id'] != "-1") {
+                    _this.productService.getProduct(params['id'])
+                        .subscribe(function (product) { return _this.product = product; }, function (errors) { return _this.handleErrors(errors); });
+                }
+                else {
+                    _this.product = new product_1.Product();
+                    _this.product.price = 1;
+                    _this.product.categoryId = 1;
+                    _this.product.url = "http://www.fairwaytech.com";
+                }
+            }
+        });
         this.getCategories();
     };
     ProductDetailComponent.prototype.goBack = function () {
@@ -42,6 +53,8 @@ var ProductDetailComponent = (function () {
         this.productService.addProduct(product).subscribe(function () { return _this.goBack(); }, function (errors) { return _this.handleErrors(errors); });
     };
     ProductDetailComponent.prototype.updateProduct = function (product) {
+        var _this = this;
+        this.productService.updateProduct(product).subscribe(function () { return _this.goBack(); }, function (errors) { return _this.handleErrors(errors); });
     };
     ProductDetailComponent.prototype.getCategories = function () {
         var _this = this;
